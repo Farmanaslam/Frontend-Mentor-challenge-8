@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+   <link rel="stylesheet" href="style.css">
+    <title>Frontend Mentor | Age calculator app</title>
+</head>
+<body>
+    <div class="container">
+   <div class="dob-form">
+    <div class="form-group">
+    <label for="day">DAY</label>
+
+    <input class="input" type="number" id="day" required="true" placeholder="DD">
+    <div class="showerror"></div>
+</div>
+<div class="form-group">
+    <label for="month">MONTH</label>
+    <input class='input-month'type="number" id="month" required="true" placeholder="MM">
+    <div class="showerror2"></div>
+</div>
+<div class="form-group">
+    <label for="year">YEAR</label>
+    <input class='input-year'type="number" id="year" required="true" placeholder="YYYY">
+    <div class="showerror3"></div>
+</div>
+   </div>
+   <div class="check-button">
+   <div class="underline"><button type="button" onclick="calculateAge()"><img src="./assets/images/icon-arrow.svg" alt="image"/></button></div>
+    </div>
+
+    <div class="dob-calculator">
+        <div class="years"><span class="totalyears">- -</span>years</div>
+        <div class="months"><span class="totalmonths">- -</span>months</div>
+        <div class="days"><span class="totaldays">- -</span>days</div>
+    </div>
+</div>
+</body>
+<script>
+    function dateDiff(dt2, dt1) {
+        var diff =(dt2.getTime() - dt1.getTime());
+        d = new Date(diff);
+        return d;
+}
+  calculateAge=()=>{
+    let inputDay=document.getElementById("day").value
+    let inputMonth=document.getElementById("month").value
+    let inputYear=document.getElementById("year").value
+     
+    const inputDate=new Date(inputYear,inputMonth,inputDay)
+    console.log(inputDate)
+    const presentDate=new Date();
+    let presentDay=presentDate.getDate()
+     let presentMonth=presentDate.getMonth()
+     let presentYear=presentDate.getFullYear()
+
+    if(inputDay>31){
+  document.querySelector(".showerror").innerHTML+="Please enter a valid date"
+   document.querySelector(".input").style.borderColor="red"
+
+    }
+  if(inputMonth>12){
+    document.querySelector(".showerror2").innerHTML+="Please enter a valid month"
+   document.querySelector(".input-month").style.borderColor="red"
+  }
+  if(inputYear>presentDate.getFullYear()){
+    document.querySelector(".showerror3").innerHTML+="Please enter a valid year"
+   document.querySelector(".input-year").style.borderColor="red"
+  }
+      
+    let differnceInDays=presentDate.getTime()-inputDate.getTime();
+    let differnceInMonths=presentDate.getMonth()-inputDate.getMonth()
+    let passedDays=differnceInDays/(1000*3600*24)
+    console.log(Math.floor(passedDays))
+    let ageDate=dateDiff(presentDate,inputDate)
+    console.log((ageDate.getFullYear-1970)+",,"+ageDate);
+    //ageDate=Math.ceil(ageDate%12)
+    let passedYear=presentDate.getFullYear()-inputDate.getFullYear()
+   
+    let years=document.querySelector(".totalyears");
+    let months=document.querySelector(".totalmonths")
+    let days=document.querySelector('.totaldays')
+    years.innerHTML=Math.abs(ageDate.getUTCFullYear()-1970);
+    months.innerHTML=ageDate.getMonth()+1;
+    days.innerHTML=ageDate.getDate();
+  }
+</script>
+</html>
